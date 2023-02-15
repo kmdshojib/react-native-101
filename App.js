@@ -3,6 +3,7 @@ import { ImageBackground, SafeAreaView, StyleSheet, View } from "react-native";
 import StartGameScreen from "./screens/StartGameScreen";
 import { LinearGradient } from 'expo-linear-gradient';
 import GameScreen from "./screens/GameScreen";
+import colors from "./Constants/colors";
 
 const App = () => {
   const [userNumber, setUserNumber] = useState()
@@ -12,10 +13,10 @@ const App = () => {
   }
   let screen = <StartGameScreen onPickedNumber={pickedNumberHandler} />
   if (userNumber) {
-    screen = <GameScreen />
+    screen = <GameScreen userNumber={userNumber}/>
   }
   return (
-    <LinearGradient colors={["#4e0329", "#ddb52f"]} style={styles.rootScreen}>
+    <LinearGradient colors={[colors.primary700, colors.acent500]} style={styles.rootScreen}>
       <ImageBackground source={require("./assets/dice.jpg")} resizeMode="cover" style={styles.rootScreen} imageStyle={styles.bgImage}>
         <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
       </ImageBackground>
