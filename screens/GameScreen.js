@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import NumberContainer from '../components/game/NumberContainer'
 import PrimaryButton from '../components/PrimaryButton'
@@ -18,14 +18,21 @@ let minBoundery = 1
 let maxBoundery = 99
 
 
-const GameScreen = ({ userNumber }) => {
-    const initialGuess = generateRandomBetween(minBoundery, maxBoundery, userNumber)
+const GameScreen = ({ userNumber, onGameOver }) => {
+    const initialGuess = generateRandomBetween(1, 100, userNumber)
     const [currentGuess, setCurrentGuess] = useState(initialGuess)
+
+    useEffect(() => {
+        if (currentGuess === userNumber) {
+            onGameOver()
+        }
+    }, [currentGuess, userNumber, onGameOver])
 
     const nextGussHandler = (direction) => {
 
         if ((direction === "loweer" && currentGuess < userNumber) || (direction === "greater" && currentGuess > userNumber)) {
-            Alert.alert("Worng number",{text:"okey", style:"cancle"})
+            Alert.alert("Worng number", [{ text: "okey", style: "cancle" }])
+            return
         }
         if (direction === "lower") {
             maxBoundery = currentGuess - 1
@@ -41,9 +48,13 @@ const GameScreen = ({ userNumber }) => {
             <NumberContainer>{currentGuess}</NumberContainer>
             <View>
                 <Text>Higher or lower?</Text>
-                <View>
-                    <PrimaryButton onPress={nextGussHandler.bind(this, "lower")}>+</PrimaryButton>
-                    <PrimaryButton onPress={nextGussHandler.bind(this, "greater")}>-</PrimaryButton>
+                <View style={styles.buttonsContainer}>
+                    <View style={styles.buttonContainer}>
+                        <PrimaryButton onPress={nextGussHandler.bind(this, "lower")}>-</PrimaryButton>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <PrimaryButton onPress={nextGussHandler.bind(this, "greater")}>+</PrimaryButton>
+                    </View>
                 </View>
             </View>
             {/* <View>
@@ -53,6 +64,12 @@ const GameScreen = ({ userNumber }) => {
     )
 }
 const styles = StyleSheet.create({
+    buttonsContainer: {
+        flexDirection: "row"
+    },
+    buttonContainer: {
+        flex: 1
+    },
     screen: {
         flex: 1,
         padding: 24
