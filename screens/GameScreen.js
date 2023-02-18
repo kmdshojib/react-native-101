@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { Ionicons } from "@expo/vector-icons"
 import NumberContainer from '../components/game/NumberContainer'
 import PrimaryButton from '../components/PrimaryButton'
 import Title from '../components/Title'
 import { Alert } from 'react-native';
+import colors from '../Constants/colors'
 
 
 const generateRandomBetween = (min, max, exclude) => {
@@ -30,9 +32,8 @@ const GameScreen = ({ userNumber, onGameOver }) => {
 
     const nextGussHandler = (direction) => {
 
-        if ((direction === "loweer" && currentGuess < userNumber) || (direction === "greater" && currentGuess > userNumber)) {
-            Alert.alert("Worng number", [{ text: "okey", style: "cancle" }])
-            return
+        if ((direction === "lower" && currentGuess < userNumber) || (direction === "greater" && currentGuess > userNumber)) {
+            return Alert.alert("Worng number", [{ text: "okey", style: "cancle" }])
         }
         if (direction === "lower") {
             maxBoundery = currentGuess - 1
@@ -47,13 +48,17 @@ const GameScreen = ({ userNumber, onGameOver }) => {
             <Title>Oponent's Guess</Title>
             <NumberContainer>{currentGuess}</NumberContainer>
             <View>
-                <Text>Higher or lower?</Text>
+                <Text style={styles.insTuctionText}>Higher or lower?</Text>
                 <View style={styles.buttonsContainer}>
                     <View style={styles.buttonContainer}>
-                        <PrimaryButton onPress={nextGussHandler.bind(this, "lower")}>-</PrimaryButton>
+                        <PrimaryButton onPress={nextGussHandler.bind(this, "lower")}>
+                            <Ionicons name="md-remove" size={24} color="white" />
+                        </PrimaryButton>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <PrimaryButton onPress={nextGussHandler.bind(this, "greater")}>+</PrimaryButton>
+                        <PrimaryButton onPress={nextGussHandler.bind(this, "greater")}>
+                            <Ionicons name="md-add" size={24} color="white" />
+                        </PrimaryButton>
                     </View>
                 </View>
             </View>
@@ -74,6 +79,12 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 24
     },
+    insTuctionText: {
+        color: colors.acent500,
+        fontSize: 24,
+        marginBottom: 5,
+        marginLeft: 5
+    }
 
 })
 export default GameScreen
