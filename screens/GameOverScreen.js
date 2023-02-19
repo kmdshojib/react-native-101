@@ -1,10 +1,11 @@
-import { Text, View } from "react-native"
+import { View } from "react-native"
+import Title from "../components/Title"
 
 
 const GameOverScreen = () => {
   return (
     <View>
-        <Text>Game Over!</Text>
+        <Title>Game Over!</Title>
     </View>
   )
 }

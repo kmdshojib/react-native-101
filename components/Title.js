@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View } from "react-native"
-import colors from "../Constants/colors"
+import { StyleSheet, Text } from "react-native"
 
-const Title = ({ childen }) => {
+const Title = ({ children }) => {
     return (
-        <Text style={styles.title}>Oponent's Guess</Text>
+        <Text style={styles.title}>{children}</Text>
 
     )
 }
@@ -14,7 +13,10 @@ const styles = StyleSheet.create({
         textAlign:"center",
         fontWeight:"bold",
         color:"white",
-        padding: 12
+        padding: 12,
+        fontFamily:"open-sans-bold",
+        color:"white"
+
     }
 })
 export default Title

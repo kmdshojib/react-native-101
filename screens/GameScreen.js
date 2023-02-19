@@ -8,6 +8,7 @@ import { Alert } from 'react-native';
 import colors from '../Constants/colors'
 
 
+
 const generateRandomBetween = (min, max, exclude) => {
     const rndNum = Math.floor(Math.random() * (max - min)) + min
     if (rndNum === exclude) {
@@ -17,31 +18,42 @@ const generateRandomBetween = (min, max, exclude) => {
     }
 }
 let minBoundery = 1
-let maxBoundery = 99
+let maxBoundery = 100
 
 
 const GameScreen = ({ userNumber, onGameOver }) => {
     const initialGuess = generateRandomBetween(1, 100, userNumber)
     const [currentGuess, setCurrentGuess] = useState(initialGuess)
+    const [guessRounds, setGuessRounds] = useState([initialGuess]);
 
     useEffect(() => {
         if (currentGuess === userNumber) {
-            onGameOver()
+            onGameOver();
         }
-    }, [currentGuess, userNumber, onGameOver])
-
+    }, [currentGuess, guessRounds, userNumber, onGameOver])
+    useEffect(() => {
+        minBoundery = 1;
+        maxBoundery = 100;
+    }, []);
     const nextGussHandler = (direction) => {
 
-        if ((direction === "lower" && currentGuess < userNumber) || (direction === "greater" && currentGuess > userNumber)) {
-            return Alert.alert("Worng number", [{ text: "okey", style: "cancle" }])
+        if (
+            (direction === 'lower' && currentGuess < userNumber) ||
+            (direction === 'greater' && currentGuess > userNumber)
+        ) {
+            Alert.alert("Don't lie!", 'You know that this is wrong...', [
+                { text: 'Sorry!', style: 'cancel' },
+            ]);
+            return;
         }
         if (direction === "lower") {
-            maxBoundery = currentGuess - 1
+            maxBoundery = currentGuess
         } else {
-            minBoundery = currentGuess + 1;
+            minBoundery = currentGuess + 1
         }
         const newRand = generateRandomBetween(minBoundery, maxBoundery, currentGuess)
-        setCurrentGuess(newRand)
+        setCurrentGuess(newRand);
+        setGuessRounds((prevGuessRounds) => [newRand, ...prevGuessRounds]);
     }
     return (
         <View style={styles.screen}>
@@ -83,7 +95,8 @@ const styles = StyleSheet.create({
         color: colors.acent500,
         fontSize: 24,
         marginBottom: 5,
-        marginLeft: 5
+        marginLeft: 5,
+        fontFamily: "open-sans"
     }
 
 })
