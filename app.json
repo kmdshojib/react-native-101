@@ -3,7 +3,7 @@
     "name": "native-start",
     "slug": "native-start",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "defalut",
     "icon": "",
     "userInterfaceStyle": "light",
     "splash": {

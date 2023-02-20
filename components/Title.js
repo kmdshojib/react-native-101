@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
         color:"white",
         padding: 12,
         fontFamily:"open-sans-bold",
-        color:"white"
-
+        color:"white",
+        maxWidth:"80%",
     }
 })
 export default Title

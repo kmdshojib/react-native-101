@@ -17,11 +17,13 @@ const styles = StyleSheet.create({
         margin: 24,
         alignItems:"center",
         justifyContent:"center",
+        maxWidth:"80%"
     },
     numText: {
         color: colors.acent500,
         fontSize:24,
-        fontWeight:"bold"
+        fontWeight:"bold",
+        maxWidth:"80%"
     }
 })
 export default NumberContainer
